@@ -1,0 +1,6 @@
+{
+  "name": "Syncsoft",
+  "description": "Complete enterprise project management dashboard with real-time team collaboration, automated task tracking, integrated calendar, and cross-department communication.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
