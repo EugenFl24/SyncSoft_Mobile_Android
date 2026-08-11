@@ -1,4 +1,4 @@
-package com.example.data
+package com.aistudio.syncsoft.dashboard.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -29,22 +29,26 @@ enum class TaskPriority(val displayName: String, val colorHex: String) {
 
 @Entity(tableName = "projects")
 data class ProjectEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    val title: String,
-    val department: String,
-    val description: String,
-    val progressPercentage: Int, // 0 - 100
-    val status: String, // e.g., "Active", "Planning", "Completed"
-    val teamLeadName: String,
-    val memberCount: Int,
-    val dueDate: String,
-    val colorHex: String
+    @PrimaryKey val id: String,
+    val name: String,
+    val location: String? = null,
+    val status: String = "ACTIVE",
+    val salePrice: Double = 0.0,
+    val createdAt: String = "",
+    val updatedAt: String = "",
+    val clientName: String? = null,
+    val saleDate: String? = null,
+    val stage: String = "NUEVA_VENTA",
+    val blueprintUrl: String? = null,
+    val electricalDiagramUrl: String? = null,
+    val technicalNotes: String? = null,
+    val colorHex: String = "#4F46E5" // Kept for UI styling
 )
 
 @Entity(tableName = "tasks")
 data class TaskEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    val projectId: Long,
+    val projectId: String,
     val projectTitle: String,
     val title: String,
     val description: String,

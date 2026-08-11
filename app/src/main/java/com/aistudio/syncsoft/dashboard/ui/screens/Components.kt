@@ -1,4 +1,4 @@
-package com.example.ui.screens
+package com.aistudio.syncsoft.dashboard.ui.screens
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -51,16 +51,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.data.Department
-import com.example.data.TaskEntity
-import com.example.data.TaskPriority
-import com.example.data.TaskStatus
-import com.example.data.TeamMemberPresence
+import com.aistudio.syncsoft.dashboard.data.Department
+import com.aistudio.syncsoft.dashboard.data.TaskEntity
+import com.aistudio.syncsoft.dashboard.data.TaskPriority
+import com.aistudio.syncsoft.dashboard.data.TaskStatus
+import com.aistudio.syncsoft.dashboard.data.TeamMemberPresence
 
 @Composable
 fun SyncsoftTopHeader(
     selectedDepartment: String,
-    currentThemeMode: com.example.ui.theme.ThemeMode = com.example.ui.theme.ThemeMode.LIGHT,
+    currentThemeMode: com.aistudio.syncsoft.dashboard.ui.theme.ThemeMode = com.aistudio.syncsoft.dashboard.ui.theme.ThemeMode.LIGHT,
     onDepartmentSelected: (String) -> Unit,
     onGenerateAiReport: () -> Unit,
     onCycleTheme: () -> Unit
@@ -132,9 +132,9 @@ fun SyncsoftTopHeader(
                     Surface(
                         shape = RoundedCornerShape(20.dp),
                         color = when (currentThemeMode) {
-                            com.example.ui.theme.ThemeMode.LIGHT -> MaterialTheme.colorScheme.surfaceVariant
-                            com.example.ui.theme.ThemeMode.DARK -> MaterialTheme.colorScheme.surfaceVariant
-                            com.example.ui.theme.ThemeMode.HIGH_SUNLIGHT -> Color(0xFFFDE047) // High contrast yellow badge
+                            com.aistudio.syncsoft.dashboard.ui.theme.ThemeMode.LIGHT -> MaterialTheme.colorScheme.surfaceVariant
+                            com.aistudio.syncsoft.dashboard.ui.theme.ThemeMode.DARK -> MaterialTheme.colorScheme.surfaceVariant
+                            com.aistudio.syncsoft.dashboard.ui.theme.ThemeMode.HIGH_SUNLIGHT -> Color(0xFFFDE047) // High contrast yellow badge
                         },
                         modifier = Modifier
                             .testTag("theme_toggle_button")
@@ -145,9 +145,9 @@ fun SyncsoftTopHeader(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             val (icon, label, tint) = when (currentThemeMode) {
-                                com.example.ui.theme.ThemeMode.LIGHT -> Triple(Icons.Default.LightMode, "Light", MaterialTheme.colorScheme.onSurfaceVariant)
-                                com.example.ui.theme.ThemeMode.DARK -> Triple(Icons.Default.DarkMode, "Dark", MaterialTheme.colorScheme.onSurfaceVariant)
-                                com.example.ui.theme.ThemeMode.HIGH_SUNLIGHT -> Triple(Icons.Default.WbSunny, "Site Sun", Color.Black)
+                                com.aistudio.syncsoft.dashboard.ui.theme.ThemeMode.LIGHT -> Triple(Icons.Default.LightMode, "Light", MaterialTheme.colorScheme.onSurfaceVariant)
+                                com.aistudio.syncsoft.dashboard.ui.theme.ThemeMode.DARK -> Triple(Icons.Default.DarkMode, "Dark", MaterialTheme.colorScheme.onSurfaceVariant)
+                                com.aistudio.syncsoft.dashboard.ui.theme.ThemeMode.HIGH_SUNLIGHT -> Triple(Icons.Default.WbSunny, "Site Sun", Color.Black)
                             }
                             Icon(
                                 imageVector = icon,

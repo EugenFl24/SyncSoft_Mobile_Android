@@ -1,4 +1,4 @@
-package com.example.ui.screens
+package com.aistudio.syncsoft.dashboard.ui.screens
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -45,10 +45,10 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.data.ActivityLogEntity
-import com.example.data.ProjectEntity
-import com.example.data.TaskEntity
-import com.example.data.TeamMemberPresence
+import com.aistudio.syncsoft.dashboard.data.ActivityLogEntity
+import com.aistudio.syncsoft.dashboard.data.ProjectEntity
+import com.aistudio.syncsoft.dashboard.data.TaskEntity
+import com.aistudio.syncsoft.dashboard.data.TeamMemberPresence
 
 import androidx.compose.foundation.clickable
 
@@ -290,7 +290,7 @@ fun ProjectCardItem(
                     color = MaterialTheme.colorScheme.primaryContainer
                 ) {
                     Text(
-                        text = project.department,
+                        text = project.stage,
                         fontSize = 10.sp,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -299,7 +299,7 @@ fun ProjectCardItem(
                 }
 
                 Text(
-                    text = "${project.progressPercentage}% Complete",
+                    text = "$${project.salePrice}",
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary
@@ -309,14 +309,14 @@ fun ProjectCardItem(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = project.title,
+                text = project.name,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface
             )
 
             Text(
-                text = project.description,
+                text = project.location ?: "Sin ubicación",
                 fontSize = 11.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 2
@@ -324,15 +324,7 @@ fun ProjectCardItem(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            LinearProgressIndicator(
-                progress = { project.progressPercentage / 100f },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(6.dp)
-                    .clip(RoundedCornerShape(3.dp)),
-                color = MaterialTheme.colorScheme.primary,
-                trackColor = MaterialTheme.colorScheme.surfaceVariant
-            )
+            // Removed LinearProgressIndicator since progressPercentage is gone
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -342,12 +334,12 @@ fun ProjectCardItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Lead: ${project.teamLeadName} (${project.memberCount} members)",
+                    text = "Client: ${project.clientName ?: "N/A"}",
                     fontSize = 11.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
-                    text = "Due ${project.dueDate}",
+                    text = project.createdAt,
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant

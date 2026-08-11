@@ -1,4 +1,4 @@
-package com.example.data
+package com.aistudio.syncsoft.dashboard.data
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,7 +34,7 @@ class SyncsoftRepository(private val dao: SyncsoftDao) {
     fun getChatMessages(channelId: String): Flow<List<ChatMessageEntity>> = dao.getChatMessagesForChannel(channelId)
 
     suspend fun addTask(
-        projectId: Long,
+        projectId: String,
         projectTitle: String,
         title: String,
         description: String,
@@ -199,7 +199,7 @@ class SyncsoftRepository(private val dao: SyncsoftDao) {
         val p = dao.getAllProjects()
         for ((title, priority) in subtasks) {
             addTask(
-                projectId = 1,
+                projectId = "proj-1",
                 projectTitle = projectTitle,
                 title = title,
                 description = "AI auto-generated subtask based on request: $taskPrompt",
@@ -240,16 +240,30 @@ class SyncsoftRepository(private val dao: SyncsoftDao) {
         return id
     }
 
-    suspend fun updateProjectProgress(projectId: Long, newProgress: Int) {
-        dao.updateProjectProgress(projectId, newProgress)
+    suspend fun updateProjectStage(projectId: String, newStage: String) {
+        dao.updateProjectStage(projectId, newStage)
         val log = ActivityLogEntity(
             userName = "Alex Rivera",
-            action = "Updated project progress to $newProgress%",
+            action = "Updated project stage to $newStage",
             target = "Project #$projectId",
             department = "Engineering",
             timestampFormatted = "Just now",
             activityType = "TASK_UPDATE"
         )
         dao.insertActivityLog(log)
+    }
+
+    suspend fun refreshProjects() {
+        try {
+            val response = com.aistudio.syncsoft.dashboard.network.SyncSoftApiClient.apiService.getProjects()
+            if (response.isSuccessful) {
+                response.body()?.let { projects ->
+                    // clear or update? Insert with replace is defined in DAO.
+                    dao.insertProjects(projects)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.ui.screens
+package com.aistudio.syncsoft.dashboard.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -57,16 +57,16 @@ import androidx.compose.material.icons.filled.ScreenShare
 import androidx.compose.material.icons.filled.VideoCall
 import androidx.compose.material.icons.filled.Videocam
 import androidx.compose.material.icons.filled.VideocamOff
-import com.example.data.ProjectEntity
-import com.example.data.TaskEntity
-import com.example.data.TaskPriority
-import com.example.data.TeamMemberPresence
+import com.aistudio.syncsoft.dashboard.data.ProjectEntity
+import com.aistudio.syncsoft.dashboard.data.TaskEntity
+import com.aistudio.syncsoft.dashboard.data.TaskPriority
+import com.aistudio.syncsoft.dashboard.data.TeamMemberPresence
 
 @Composable
 fun ProjectDetailModal(
     project: ProjectEntity,
     onDismiss: () -> Unit,
-    onUpdateProgress: (Int) -> Unit
+    onUpdateStage: (String) -> Unit
 ) {
     Dialog(onDismissRequest = onDismiss) {
         Card(
@@ -93,7 +93,7 @@ fun ProjectDetailModal(
                         color = MaterialTheme.colorScheme.primaryContainer
                     ) {
                         Text(
-                            text = project.department,
+                            text = project.stage,
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -106,14 +106,14 @@ fun ProjectDetailModal(
                 }
 
                 Text(
-                    text = project.title,
+                    text = project.name,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface
                 )
 
                 Text(
-                    text = project.description,
+                    text = project.location ?: "Ubicación pendiente",
                     fontSize = 13.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -123,39 +123,32 @@ fun ProjectDetailModal(
                     color = MaterialTheme.colorScheme.surfaceVariant
                 ) {
                     Column(modifier = Modifier.padding(12.dp)) {
-                        Text("Team Lead: ${project.teamLeadName}", fontSize = 12.sp, fontWeight = FontWeight.Bold)
-                        Text("Active Members: ${project.memberCount}", fontSize = 12.sp)
-                        Text("Target Completion: ${project.dueDate}", fontSize = 12.sp, color = MaterialTheme.colorScheme.primary)
+                        Text("Cliente: ${project.clientName ?: "N/A"}", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                        Text("Precio de Venta: $${project.salePrice}", fontSize = 12.sp)
+                        Text("Fecha de Creación: ${project.createdAt}", fontSize = 12.sp, color = MaterialTheme.colorScheme.primary)
                         Spacer(modifier = Modifier.height(6.dp))
-                        Text("Completion Progress: ${project.progressPercentage}%", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                        Text("Etapa Actual: ${project.stage}", fontSize = 12.sp, fontWeight = FontWeight.Bold)
                     }
                 }
 
-                Text("Quick Progress Update:", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                Text("Quick Status Update:", fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Button(
-                        onClick = { onUpdateProgress((project.progressPercentage + 10).coerceAtMost(100)) },
+                        onClick = { onUpdateStage("INSTALACION") },
                         modifier = Modifier.weight(1f),
                         colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
                     ) {
-                        Text("+10%", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text("A Instalación", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     Button(
-                        onClick = { onUpdateProgress((project.progressPercentage + 25).coerceAtMost(100)) },
-                        modifier = Modifier.weight(1f),
-                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
-                    ) {
-                        Text("+25%", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    }
-                    Button(
-                        onClick = { onUpdateProgress(100) },
+                        onClick = { onUpdateStage("FINALIZADO") },
                         modifier = Modifier.weight(1f),
                         colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                     ) {
-                        Text("100% Done", fontSize = 11.sp)
+                        Text("Finalizar", fontSize = 11.sp)
                     }
                 }
 

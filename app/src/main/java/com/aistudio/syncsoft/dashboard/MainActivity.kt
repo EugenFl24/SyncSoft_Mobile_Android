@@ -1,4 +1,4 @@
-package com.example
+package com.aistudio.syncsoft.dashboard
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -30,25 +30,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.data.TaskEntity
-import com.example.ui.SyncsoftViewModel
-import com.example.ui.screens.AddAutomationRuleDialog
-import com.example.ui.screens.AddCalendarEventDialog
-import com.example.ui.screens.AddTaskDialog
-import com.example.ui.screens.AiTaskBreakdownDialog
-import com.example.ui.screens.AttachFileModal
-import com.example.ui.screens.AutomationsScreen
-import com.example.ui.screens.CalendarScreen
-import com.example.ui.screens.ChatScreen
-import com.example.ui.screens.DashboardScreen
-import com.example.ui.screens.ExecutiveReportModal
-import com.example.ui.screens.LiveHuddleModal
-import com.example.ui.screens.ProjectDetailModal
-import com.example.ui.screens.ProjectsTasksScreen
-import com.example.ui.screens.SyncsoftTopHeader
-import com.example.ui.screens.TaskDetailModal
-import com.example.ui.screens.TeamMemberModal
-import com.example.ui.theme.SyncsoftTheme
+import com.aistudio.syncsoft.dashboard.data.TaskEntity
+import com.aistudio.syncsoft.dashboard.ui.SyncsoftViewModel
+import com.aistudio.syncsoft.dashboard.ui.screens.AddAutomationRuleDialog
+import com.aistudio.syncsoft.dashboard.ui.screens.AddCalendarEventDialog
+import com.aistudio.syncsoft.dashboard.ui.screens.AddTaskDialog
+import com.aistudio.syncsoft.dashboard.ui.screens.AiTaskBreakdownDialog
+import com.aistudio.syncsoft.dashboard.ui.screens.AttachFileModal
+import com.aistudio.syncsoft.dashboard.ui.screens.AutomationsScreen
+import com.aistudio.syncsoft.dashboard.ui.screens.CalendarScreen
+import com.aistudio.syncsoft.dashboard.ui.screens.ChatScreen
+import com.aistudio.syncsoft.dashboard.ui.screens.DashboardScreen
+import com.aistudio.syncsoft.dashboard.ui.screens.ExecutiveReportModal
+import com.aistudio.syncsoft.dashboard.ui.screens.LiveHuddleModal
+import com.aistudio.syncsoft.dashboard.ui.screens.ProjectDetailModal
+import com.aistudio.syncsoft.dashboard.ui.screens.ProjectsTasksScreen
+import com.aistudio.syncsoft.dashboard.ui.screens.SyncsoftTopHeader
+import com.aistudio.syncsoft.dashboard.ui.screens.TaskDetailModal
+import com.aistudio.syncsoft.dashboard.ui.screens.TeamMemberModal
+import com.aistudio.syncsoft.dashboard.ui.theme.SyncsoftTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -69,7 +69,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun SyncsoftAppContent(
     viewModel: SyncsoftViewModel,
-    currentThemeMode: com.example.ui.theme.ThemeMode
+    currentThemeMode: com.aistudio.syncsoft.dashboard.ui.theme.ThemeMode
 ) {
     val selectedDept by viewModel.selectedDepartment.collectAsStateWithLifecycle()
     val mainTab by viewModel.selectedMainTab.collectAsStateWithLifecycle()
@@ -206,7 +206,7 @@ fun SyncsoftAppContent(
                     onDismiss = { viewModel.showAddTaskDialog.value = false },
                     onConfirm = { title, description, department, assigneeName, priority, dueDate, isAutomated ->
                         viewModel.addTask(
-                            projectId = 1,
+                            projectId = "proj-1",
                             projectTitle = "Syncsoft Core Dashboard v3.0",
                             title = title,
                             description = description,
@@ -282,8 +282,8 @@ fun SyncsoftAppContent(
                 ProjectDetailModal(
                     project = project,
                     onDismiss = { viewModel.selectedProjectDetail.value = null },
-                    onUpdateProgress = { newProgress ->
-                        viewModel.updateProjectProgress(project.id, newProgress)
+                    onUpdateStage = { newStage ->
+                        viewModel.updateProjectStage(project.id, newStage)
                     }
                 )
             }

@@ -1,17 +1,17 @@
-package com.example.ui
+package com.aistudio.syncsoft.dashboard.ui
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.data.ActivityLogEntity
-import com.example.data.AutomationRuleEntity
-import com.example.data.CalendarEventEntity
-import com.example.data.ChatMessageEntity
-import com.example.data.ProjectEntity
-import com.example.data.SyncsoftDatabase
-import com.example.data.SyncsoftRepository
-import com.example.data.TaskEntity
-import com.example.data.TeamMemberPresence
+import com.aistudio.syncsoft.dashboard.data.ActivityLogEntity
+import com.aistudio.syncsoft.dashboard.data.AutomationRuleEntity
+import com.aistudio.syncsoft.dashboard.data.CalendarEventEntity
+import com.aistudio.syncsoft.dashboard.data.ChatMessageEntity
+import com.aistudio.syncsoft.dashboard.data.ProjectEntity
+import com.aistudio.syncsoft.dashboard.data.SyncsoftDatabase
+import com.aistudio.syncsoft.dashboard.data.SyncsoftRepository
+import com.aistudio.syncsoft.dashboard.data.TaskEntity
+import com.aistudio.syncsoft.dashboard.data.TeamMemberPresence
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -28,11 +28,14 @@ class SyncsoftViewModel(application: Application) : AndroidViewModel(application
     init {
         val dao = SyncsoftDatabase.getDatabase(application).syncsoftDao()
         repository = SyncsoftRepository(dao)
+        viewModelScope.launch {
+            repository.refreshProjects()
+        }
     }
 
     // Navigation & Filters
-    private val _themeMode = MutableStateFlow(com.example.ui.theme.ThemeMode.LIGHT)
-    val themeMode: StateFlow<com.example.ui.theme.ThemeMode> = _themeMode.asStateFlow()
+    private val _themeMode = MutableStateFlow(com.aistudio.syncsoft.dashboard.ui.theme.ThemeMode.LIGHT)
+    val themeMode: StateFlow<com.aistudio.syncsoft.dashboard.ui.theme.ThemeMode> = _themeMode.asStateFlow()
 
     private val _selectedDepartment = MutableStateFlow("All Departments")
     val selectedDepartment: StateFlow<String> = _selectedDepartment.asStateFlow()
@@ -85,15 +88,15 @@ class SyncsoftViewModel(application: Application) : AndroidViewModel(application
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     // Actions
-    fun setThemeMode(mode: com.example.ui.theme.ThemeMode) {
+    fun setThemeMode(mode: com.aistudio.syncsoft.dashboard.ui.theme.ThemeMode) {
         _themeMode.value = mode
     }
 
     fun cycleThemeMode() {
         _themeMode.value = when (_themeMode.value) {
-            com.example.ui.theme.ThemeMode.LIGHT -> com.example.ui.theme.ThemeMode.DARK
-            com.example.ui.theme.ThemeMode.DARK -> com.example.ui.theme.ThemeMode.HIGH_SUNLIGHT
-            com.example.ui.theme.ThemeMode.HIGH_SUNLIGHT -> com.example.ui.theme.ThemeMode.LIGHT
+            com.aistudio.syncsoft.dashboard.ui.theme.ThemeMode.LIGHT -> com.aistudio.syncsoft.dashboard.ui.theme.ThemeMode.DARK
+            com.aistudio.syncsoft.dashboard.ui.theme.ThemeMode.DARK -> com.aistudio.syncsoft.dashboard.ui.theme.ThemeMode.HIGH_SUNLIGHT
+            com.aistudio.syncsoft.dashboard.ui.theme.ThemeMode.HIGH_SUNLIGHT -> com.aistudio.syncsoft.dashboard.ui.theme.ThemeMode.LIGHT
         }
     }
 
@@ -110,7 +113,7 @@ class SyncsoftViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun addTask(
-        projectId: Long,
+        projectId: String,
         projectTitle: String,
         title: String,
         description: String,
@@ -211,11 +214,11 @@ class SyncsoftViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun updateProjectProgress(projectId: Long, newProgress: Int) {
+    fun updateProjectStage(projectId: String, newStage: String) {
         viewModelScope.launch {
-            repository.updateProjectProgress(projectId, newProgress)
+            repository.updateProjectStage(projectId, newStage)
             // Update selected project state if opened
-            selectedProjectDetail.value = selectedProjectDetail.value?.copy(progressPercentage = newProgress)
+            selectedProjectDetail.value = selectedProjectDetail.value?.copy(stage = newStage)
         }
     }
 

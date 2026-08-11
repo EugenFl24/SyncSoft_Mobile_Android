@@ -1,4 +1,4 @@
-package com.example.data
+package com.aistudio.syncsoft.dashboard.data
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -17,7 +17,7 @@ interface SyncsoftDao {
     suspend fun insertProjects(projects: List<ProjectEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertProject(project: ProjectEntity): Long
+    suspend fun insertProject(project: ProjectEntity)
 
     // Tasks
     @Query("SELECT * FROM tasks ORDER BY id DESC")
@@ -87,8 +87,8 @@ interface SyncsoftDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAutomationRule(rule: AutomationRuleEntity): Long
 
-    @Query("UPDATE projects SET progressPercentage = :progressPercentage WHERE id = :projectId")
-    suspend fun updateProjectProgress(projectId: Long, progressPercentage: Int)
+    @Query("UPDATE projects SET stage = :stage WHERE id = :projectId")
+    suspend fun updateProjectStage(projectId: String, stage: String)
 
     // Checks
     @Query("SELECT COUNT(*) FROM projects")

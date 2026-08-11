@@ -1,4 +1,4 @@
-package com.example.data
+package com.aistudio.syncsoft.dashboard.data
 
 import android.content.Context
 import androidx.room.Database
@@ -56,47 +56,43 @@ abstract class SyncsoftDatabase : RoomDatabase() {
                 // Populate Initial Projects
                 val defaultProjects = listOf(
                     ProjectEntity(
-                        title = "Syncsoft Core Dashboard v3.0",
-                        department = "Engineering",
-                        description = "Next-gen cross-department SaaS project management portal with automated workflows.",
-                        progressPercentage = 84,
-                        status = "In Progress",
-                        teamLeadName = "Sarah Jenkins",
-                        memberCount = 12,
-                        dueDate = "Aug 15, 2026",
+                        id = "proj-1",
+                        name = "Residencial Solar - Familia Pérez",
+                        location = "Col. Centro, GDL",
+                        stage = "NUEVA_VENTA",
+                        status = "ACTIVE",
+                        salePrice = 85000.0,
+                        clientName = "Juan Pérez",
                         colorHex = "#4F46E5"
                     ),
                     ProjectEntity(
-                        title = "Brand Guidelines & UI System Sync",
-                        department = "Design",
-                        description = "Unified design language component library & cross-platform token synchronization.",
-                        progressPercentage = 92,
-                        status = "In Review",
-                        teamLeadName = "Marcus Chen",
-                        memberCount = 8,
-                        dueDate = "Jul 30, 2026",
+                        id = "proj-2",
+                        name = "Sistema Bombeo Solar - Rancho El Sol",
+                        location = "Zapopan, JAL",
+                        stage = "INSTALACION",
+                        status = "ACTIVE",
+                        salePrice = 120000.0,
+                        clientName = "María González",
                         colorHex = "#EC4899"
                     ),
                     ProjectEntity(
-                        title = "Q3 Global Enterprise Campaign",
-                        department = "Marketing",
-                        description = "Omnichannel product launch, automation triggers, and customer webinar series.",
-                        progressPercentage = 60,
-                        status = "Active",
-                        teamLeadName = "Elena Rostova",
-                        memberCount = 15,
-                        dueDate = "Sep 1, 2026",
+                        id = "proj-3",
+                        name = "Comercial - Mueblerías Del Valle",
+                        location = "Tlaquepaque, JAL",
+                        stage = "TRAMITE_CFE",
+                        status = "ACTIVE",
+                        salePrice = 450000.0,
+                        clientName = "Mueblerías Del Valle S.A.",
                         colorHex = "#F59E0B"
                     ),
                     ProjectEntity(
-                        title = "Automated CI/CD Deployment Pipeline",
-                        department = "Operations",
-                        description = "Zero-downtime microservices orchestration and automated regression canary checks.",
-                        progressPercentage = 75,
-                        status = "Active",
-                        teamLeadName = "David Kim",
-                        memberCount = 6,
-                        dueDate = "Aug 10, 2026",
+                        id = "proj-4",
+                        name = "Industrial - Empaques Nacionales",
+                        location = "Parque Industrial, Tlajomulco",
+                        stage = "FINALIZADO",
+                        status = "COMPLETED",
+                        salePrice = 1250000.0,
+                        clientName = "Empaques Nacionales",
                         colorHex = "#06B6D4"
                     )
                 )
@@ -105,7 +101,7 @@ abstract class SyncsoftDatabase : RoomDatabase() {
                 // Populate Initial Tasks
                 val defaultTasks = listOf(
                     TaskEntity(
-                        projectId = 1,
+                        projectId = "proj-1",
                         projectTitle = "Syncsoft Core Dashboard v3.0",
                         title = "Implement Automated Status Progression Engine",
                         description = "Auto-advance tasks to 'In Review' upon GitHub pull request merge.",
@@ -119,7 +115,7 @@ abstract class SyncsoftDatabase : RoomDatabase() {
                         automationTrigger = "GitHub PR Merge -> Auto Move"
                     ),
                     TaskEntity(
-                        projectId = 1,
+                        projectId = "proj-1",
                         projectTitle = "Syncsoft Core Dashboard v3.0",
                         title = "Real-time Presence WebSocket Integration",
                         description = "Connect live presence indicator badge with user active state.",
@@ -132,7 +128,7 @@ abstract class SyncsoftDatabase : RoomDatabase() {
                         isAutomated = false
                     ),
                     TaskEntity(
-                        projectId = 2,
+                        projectId = "proj-2",
                         projectTitle = "Brand Guidelines & UI System Sync",
                         title = "Audit M3 Dark Mode Palette Tokens",
                         description = "Ensure high-contrast accessible color contrast ratios across all components.",
@@ -146,7 +142,7 @@ abstract class SyncsoftDatabase : RoomDatabase() {
                         automationTrigger = "Auto Figma Token Import"
                     ),
                     TaskEntity(
-                        projectId = 3,
+                        projectId = "proj-3",
                         projectTitle = "Q3 Global Enterprise Campaign",
                         title = "Automated Calendar Sync for Product Webinars",
                         description = "Integrate Syncsoft calendar with Google Calendar & Outlook API.",
@@ -160,7 +156,7 @@ abstract class SyncsoftDatabase : RoomDatabase() {
                         automationTrigger = "Auto Schedule Attendees"
                     ),
                     TaskEntity(
-                        projectId = 4,
+                        projectId = "proj-4",
                         projectTitle = "Automated CI/CD Deployment Pipeline",
                         title = "Configure Automated Slack & Syncsoft Channel Alerts",
                         description = "Trigger real-time alert card when build status changes.",

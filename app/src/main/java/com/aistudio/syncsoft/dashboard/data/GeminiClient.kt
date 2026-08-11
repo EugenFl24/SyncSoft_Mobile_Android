@@ -1,6 +1,6 @@
-package com.example.data
+package com.aistudio.syncsoft.dashboard.data
 
-import com.example.BuildConfig
+import com.aistudio.syncsoft.dashboard.BuildConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
