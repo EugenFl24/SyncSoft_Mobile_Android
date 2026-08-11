@@ -41,7 +41,9 @@ import com.aistudio.syncsoft.dashboard.ui.screens.AutomationsScreen
 import com.aistudio.syncsoft.dashboard.ui.screens.CalendarScreen
 import com.aistudio.syncsoft.dashboard.ui.screens.ChatScreen
 import com.aistudio.syncsoft.dashboard.ui.screens.DashboardScreen
+import com.aistudio.syncsoft.dashboard.ui.screens.DailyReportModal
 import com.aistudio.syncsoft.dashboard.ui.screens.ExecutiveReportModal
+import com.aistudio.syncsoft.dashboard.ui.screens.UploadEvidenceModal
 import com.aistudio.syncsoft.dashboard.ui.screens.LiveHuddleModal
 import com.aistudio.syncsoft.dashboard.ui.screens.ProjectDetailModal
 import com.aistudio.syncsoft.dashboard.ui.screens.ProjectsTasksScreen
@@ -89,6 +91,8 @@ fun SyncsoftAppContent(
     val showAiBreakdown by viewModel.showAiBreakdownDialog.collectAsStateWithLifecycle()
     val showAddAutomationRule by viewModel.showAddAutomationRuleDialog.collectAsStateWithLifecycle()
     val showAttachFile by viewModel.showAttachFileDialog.collectAsStateWithLifecycle()
+    val showDailyReport by viewModel.showDailyReportDialog.collectAsStateWithLifecycle()
+    val showUploadEvidence by viewModel.showUploadEvidenceDialog.collectAsStateWithLifecycle()
 
     val selectedTaskDetail by viewModel.selectedTaskDetail.collectAsStateWithLifecycle()
     val selectedProjectDetail by viewModel.selectedProjectDetail.collectAsStateWithLifecycle()
@@ -284,6 +288,29 @@ fun SyncsoftAppContent(
                     onDismiss = { viewModel.selectedProjectDetail.value = null },
                     onUpdateStage = { newStage ->
                         viewModel.updateProjectStage(project.id, newStage)
+                    },
+                    onOpenDailyReport = { viewModel.showDailyReportDialog.value = true },
+                    onOpenUploadEvidence = { viewModel.showUploadEvidenceDialog.value = true }
+                )
+            }
+
+            if (showDailyReport && selectedProjectDetail != null) {
+                DailyReportModal(
+                    project = selectedProjectDetail!!,
+                    onDismiss = { viewModel.showDailyReportDialog.value = false },
+                    onSubmit = { observations, personnel, weather ->
+                        // The user requested to skip backend logic and focus on UI only for now.
+                        // So we just dismiss after clicking submit.
+                    }
+                )
+            }
+
+            if (showUploadEvidence && selectedProjectDetail != null) {
+                UploadEvidenceModal(
+                    project = selectedProjectDetail!!,
+                    onDismiss = { viewModel.showUploadEvidenceDialog.value = false },
+                    onUpload = {
+                        // The user requested to skip backend logic and focus on UI only for now.
                     }
                 )
             }

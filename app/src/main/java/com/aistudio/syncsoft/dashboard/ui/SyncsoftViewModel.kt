@@ -52,6 +52,8 @@ class SyncsoftViewModel(application: Application) : AndroidViewModel(application
     val showAiBreakdownDialog = MutableStateFlow(false)
     val showAddAutomationRuleDialog = MutableStateFlow(false)
     val showAttachFileDialog = MutableStateFlow(false)
+    val showDailyReportDialog = MutableStateFlow(false)
+    val showUploadEvidenceDialog = MutableStateFlow(false)
 
     val selectedTaskDetail = MutableStateFlow<TaskEntity?>(null)
     val selectedProjectDetail = MutableStateFlow<ProjectEntity?>(null)
